@@ -8,7 +8,14 @@ use JsonSerializable;
 
 abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 {
+    /**
+     * @var array<string,mixed>
+     */
     protected $additionalFields = [];
+
+    final public function __construct()
+    {
+    }
 
     /**
      * Creates a new instance from array in format key => value
@@ -30,11 +37,19 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
         return $instance;
     }
 
+    /**
+     * @param string $offset
+     * @return bool
+     */
     public function offsetExists($offset)
     {
         return property_exists($this, $offset) || isset($this->additionalFields[$offset]);
     }
 
+    /**
+     * @param string $offset
+     * @return mixed
+     */
     public function offsetGet($offset)
     {
         if (isset($this->additionalFields[$offset])) {
@@ -44,6 +59,11 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
         return $this->{$offset};
     }
 
+    /**
+     * @param string $offset
+     * @param mixed $value
+     * @return void
+     */
     public function offsetSet($offset, $value)
     {
         if (property_exists($this, $offset)) {
@@ -53,6 +73,10 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
         $this->additionalFields[$offset] = $value;
     }
 
+    /**
+     * @param string $offset
+     * @return void
+     */
     public function offsetUnset($offset)
     {
         if (property_exists($this, $offset)) {
@@ -66,6 +90,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
      * @inheritDoc
      *
      * @param array<string,callable> $normalizers
+     * @return array
      */
     public function jsonSerialize(array $normalizers = [])
     {

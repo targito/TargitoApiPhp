@@ -36,6 +36,7 @@ final class CurlHttpRequest implements HttpRequestInterface
         }
         $stringBody = json_encode($body);
 
+        /** @var resource $curl */
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -51,6 +52,7 @@ final class CurlHttpRequest implements HttpRequestInterface
             ));
         }
 
+        /** @var string $rawBody */
         $rawBody = curl_exec($curl);
         if (curl_errno($curl)) {
             throw new HttpCurlException(

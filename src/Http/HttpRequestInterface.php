@@ -10,7 +10,7 @@ interface HttpRequestInterface
 {
     /**
      * @param string                             $url
-     * @param array|JsonSerializable&ArrayAccess $body
+     * @param array|JsonSerializable|ArrayAccess $body
      * @param CredentialsInterface|null          $credentials
      *
      * @return HttpResponseInterface

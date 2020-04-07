@@ -15,9 +15,11 @@
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpstan/phpstan": "^0.12.18"
     },
     "scripts": {
-        "fixer": "php-cs-fixer fix src -v"
+        "fixer": "php-cs-fixer fix src -v",
+        "phpstan": "phpstan analyse --level max src"
     }
 }
