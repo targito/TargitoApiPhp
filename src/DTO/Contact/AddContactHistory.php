@@ -7,12 +7,12 @@ class AddContactHistory
     /**
      * @var bool
      */
-    private $isOptedIn;
+    public $isOptedIn;
 
     /**
      * @var bool
      */
-    private $isOptedOut;
+    public $isOptedOut;
 
     /**
      * @internal

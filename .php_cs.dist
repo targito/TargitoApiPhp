@@ -1,6 +1,15 @@
 <?php
 
+use PhpCsFixer\Finder;
+
 return PhpCsFixer\Config::create()
+    ->setFinder(
+        Finder::create()
+            ->in([
+                __DIR__ . '/src',
+                __DIR__ . '/tests'
+            ])
+    )
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
