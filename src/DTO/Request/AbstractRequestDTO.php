@@ -64,8 +64,10 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @inheritDoc
+     *
+     * @param array<string,callable> $normalizers
      */
-    public function jsonSerialize()
+    public function jsonSerialize(array $normalizers = [])
     {
         $result = [];
         foreach (get_object_vars($this) as $property => $value) {
@@ -73,7 +75,11 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
                 continue;
             }
 
-            $result[$property] = $value;
+            if (isset($normalizers[$property])) {
+                $result[$property] = call_user_func($normalizers[$property], $value);
+            } else {
+                $result[$property] = $value;
+            }
         }
 
         foreach ($this->additionalFields as $key => $value) {

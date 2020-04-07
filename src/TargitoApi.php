@@ -4,6 +4,7 @@ namespace Targito\Api;
 
 use Targito\Api\Credentials\CredentialsInterface;
 use Targito\Api\Endpoint\TargitoContactEndpoint;
+use Targito\Api\Endpoint\TargitoTransactEndpoint;
 use Targito\Api\Http\HttpRequestInterface;
 use Targito\Api\Http\Request\CurlHttpRequest;
 use Targito\Api\Http\Request\StreamHttpRequest;
@@ -28,7 +29,7 @@ final class TargitoApi
      * @param CredentialsInterface      $credentials
      * @param HttpRequestInterface|null $httpRequest
      */
-    public function __construct(CredentialsInterface $credentials, HttpRequestInterface $httpRequest = null)
+    public function __construct(CredentialsInterface $credentials, ?HttpRequestInterface $httpRequest = null)
     {
         if ($httpRequest === null) {
             if (extension_loaded('curl')) {
@@ -44,5 +45,10 @@ final class TargitoApi
     public function contacts(): TargitoContactEndpoint
     {
         return new TargitoContactEndpoint($this->credentials, $this->httpRequest);
+    }
+
+    public function transact(): TargitoTransactEndpoint
+    {
+        return new TargitoTransactEndpoint($this->credentials, $this->httpRequest);
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Targito\Api\Endpoint;
 
-use LogicException;
-use Targito\Api\Credentials\CredentialsInterface;
 use Targito\Api\DTO\Request\Contact\AddContactRequest;
 use Targito\Api\DTO\Request\Contact\DeleteContactRequest;
 use Targito\Api\DTO\Request\Contact\EditContactRequest;
@@ -14,32 +12,12 @@ use Targito\Api\DTO\Response\Contact\DeleteContactResponse;
 use Targito\Api\DTO\Response\Contact\EditContactResponse;
 use Targito\Api\DTO\Response\Contact\ExportContactByIdResponse;
 use Targito\Api\DTO\Response\Contact\OptOutContactResponse;
-use Targito\Api\Http\HttpRequestInterface;
-use Targito\Api\TargitoApi;
 
 /**
  * API endpoint for working with contacts
  */
 final class TargitoContactEndpoint extends AbstractEndpoint
 {
-    private const ENDPOINT = 'contacts';
-
-    /**
-     * @var CredentialsInterface
-     */
-    private $credentials;
-
-    /**
-     * @var HttpRequestInterface
-     */
-    private $httpRequest;
-
-    public function __construct(CredentialsInterface $credentials, HttpRequestInterface $httpRequest)
-    {
-        $this->credentials = $credentials;
-        $this->httpRequest = $httpRequest;
-    }
-
     /**
      * Creates a new contact
      *
@@ -52,8 +30,8 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         if ($exception = $this->getExceptionForInvalidRequestData($data, AddContactRequest::class)) {
             throw $exception;
         }
-        if (!$data['email'] || !$data['origin'] || !$data['isOptedIn']) {
-            throw new LogicException("'email', 'origin' and 'isOptedIn' parameters are required");
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['email', 'origin', 'isOptedIn'])) {
+            throw $exception;
         }
 
         $response = $this->httpRequest->post(
@@ -77,8 +55,8 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         if ($exception = $this->getExceptionForInvalidRequestData($data, EditContactRequest::class)) {
             throw $exception;
         }
-        if (!$data['email'] || !$data['origin']) {
-            throw new LogicException("'email' and 'origin' parameters are required");
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['email', 'origin'])) {
+            throw $exception;
         }
 
         $response = $this->httpRequest->post(
@@ -102,9 +80,8 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         if ($exception = $this->getExceptionForInvalidRequestData($data, DeleteContactRequest::class)) {
             throw $exception;
         }
-
-        if (!$data['id'] || !$data['origin']) {
-            throw new LogicException("'id' and 'origin' parameters are required");
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['id', 'origin'])) {
+            throw $exception;
         }
 
         $response = $this->httpRequest->post(
@@ -128,9 +105,8 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         if ($exception = $this->getExceptionForInvalidRequestData($data, OptOutContactRequest::class)) {
             throw $exception;
         }
-
-        if (!$data['email'] || !$data['origin']) {
-            throw new LogicException("'email' and 'origin' parameters are required");
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['email', 'origin'])) {
+            throw $exception;
         }
 
         $response = $this->httpRequest->post(
@@ -154,9 +130,8 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         if ($exception = $this->getExceptionForInvalidRequestData($data, ExportContactByIdRequest::class)) {
             throw $exception;
         }
-
-        if (!$data['id'] || !$data['origin']) {
-            throw new LogicException("'id' and 'origin' parameters are required");
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['id', 'origin'])) {
+            throw $exception;
         }
 
         $response = $this->httpRequest->post(
@@ -168,8 +143,11 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         return new ExportContactByIdResponse($response);
     }
 
-    private function getApiUrl(string $method): string
+    /**
+     * @inheritDoc
+     */
+    protected function getApiModule(): string
     {
-        return sprintf('%s/%s/%s', TargitoApi::API_URL, self::ENDPOINT, ucfirst($method));
+        return 'contacts';
     }
 }
