@@ -136,7 +136,7 @@ The module is accessed by calling `contacts()` on the api object or constructing
 
 - `addContact`
     - request data: `\Targito\Api\DTO\Request\Contact\AddContactRequest`
-    - parameters:
+    - properties:
         - string `email` - the email of the contact you're adding
         - string `origin` - the contact origin
         - bool   `isOptedIn` - whether the contact is opted in
@@ -145,4 +145,53 @@ The module is accessed by calling `contacts()` on the api object or constructing
         - array  `consents` (optional) - string array containing list of consents the contact has given
         - array  `columns` (optional) - any additional columns (which must be defined in Targito), where the array key
         is the column name
-        
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\AddContactResponse`
+        - properties:
+            - string `id` - the ID of the contact
+            - bool   `isOptedIn` - whether the contact is opted in
+            - bool   `isOptedOut` - whether the contact is opted out
+            - bool   `isNew` - whether the contact is newly created or it existed before
+            - `previousState` - if the contact existed previously, this property will be instance of
+            `\Targito\Api\DTO\Contact\AddContactHistory` otherwise null.
+                - `AddContactHistory` contains these properties: `bool isOptedIn` and `bool isOptedOut`
+- `editContact`
+    - request data: `\Targito\Api\DTO\Request\Contact\EditContactRequest`
+    - properties:
+        - string `email` - the email of the contact you're editing
+        - string `origin` - the contact origin
+        - bool   `isOptedIn` (optional) - whether the contact is opted in
+        - array  `consents` (optional) - string array containing list of consents the contact has given
+        - array  `columns` (optional) - any additional columns (which must be defined in Targito), where the array key
+        is the column name
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\EditContactResponse`
+        - properties:
+            - bool `success` - whether the editing succeeded or not
+- `deleteContact`
+    - request data: `\Targito\Api\DTO\Request\Contact\DeleteContactRequest`
+    - properties:
+        - string `id` - the contact ID
+        - string `origin` - the contact origin
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\DeleteContactResponse`
+        - properties:
+            - string `jobId` - the ID of the job that will perform the deletion
+- `optOutContact`
+    - request data: `\Targito\Api\DTO\Request\Contact\OptOutContactRequest`
+    - properties:
+        - string `email` - the email of the contact you're deleting
+        - string `origin` - the contact origin 
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\OptOutContactResponse`
+        - properties:
+            - bool `success` - whether opting out succeeded or not
+- `exportContactById`
+    - request data: `\Targito\Api\DTO\Request\Contact\ExportContactByIdRequest`
+    - properties:
+        - string `id` - the contact ID
+        - string `origin` - the contact origin
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\ExportContactByIdResponse`
+        - properties:
+            - string `jobId` - the ID of the job that will perform the export
