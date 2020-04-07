@@ -39,6 +39,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -48,6 +49,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -61,7 +63,8 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -75,6 +78,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -90,6 +94,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
      * @inheritDoc
      *
      * @param array<string,callable> $normalizers
+     *
      * @return array
      */
     public function jsonSerialize(array $normalizers = [])
