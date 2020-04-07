@@ -1,0 +1,85 @@
+<?php
+
+namespace Targito\Api\DTO\Request;
+
+use ArrayAccess;
+use InvalidArgumentException;
+use JsonSerializable;
+
+abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
+{
+    protected $additionalFields = [];
+
+    /**
+     * Creates a new instance from array in format key => value
+     *
+     * @param array $data The data array in key => value format
+     *
+     * @return static
+     */
+    public static function fromArray(array $data)
+    {
+        $instance = new static();
+        foreach ($data as $key => $value) {
+            if (!property_exists($instance, $key)) {
+                throw new InvalidArgumentException("Invalid key '${key}'");
+            }
+            $instance->{$key} = $value;
+        }
+
+        return $instance;
+    }
+
+    public function offsetExists($offset)
+    {
+        return property_exists($this, $offset) || isset($this->additionalFields[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        if (isset($this->additionalFields[$offset])) {
+            return $this->additionalFields[$offset];
+        }
+
+        return $this->{$offset};
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        if (property_exists($this, $offset)) {
+            $this->{$offset} = $value;
+        }
+
+        $this->additionalFields[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        if (property_exists($this, $offset)) {
+            $this->{$offset} = null;
+        } elseif (isset($this->additionalFields[$offset])) {
+            unset($this->additionalFields[$offset]);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        $result = [];
+        foreach (get_object_vars($this) as $property => $value) {
+            if ($property === 'additionalFields') {
+                continue;
+            }
+
+            $result[$property] = $value;
+        }
+
+        foreach ($this->additionalFields as $key => $value) {
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+}
