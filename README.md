@@ -1,6 +1,6 @@
 # Targito API implementation for PHP 7.2+
 
-![Build status](https://img.shields.io/travis/com/targito/TargitoApiPhp/master)
+[![Build Status](https://travis-ci.com/targito/TargitoApiPhp.svg?branch=master)](https://travis-ci.com/targito/TargitoApiPhp)
 
 ## Installation
 
