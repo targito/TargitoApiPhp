@@ -9,6 +9,9 @@
         "php": "^7.2",
         "ext-json": "*"
     },
+    "suggest": {
+        "ext-curl": "Install curl for a better http implementation"
+    },
     "autoload": {
         "psr-4": {
             "Targito\\Api\\": "src/"
