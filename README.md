@@ -1,5 +1,7 @@
 # Targito API implementation for PHP 7.2+
 
+![Build status](https://img.shields.io/travis/com/targito/TargitoApiPhp/master)
+
 ## Installation
 
 `composer require targito/targito-api`

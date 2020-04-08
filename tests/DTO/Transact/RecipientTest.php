@@ -2,12 +2,11 @@
 
 namespace Targito\Api\Tests\DTO\Transact;
 
-use Targito\Api\DTO\Transact\Recipient;
 use PHPUnit\Framework\TestCase;
+use Targito\Api\DTO\Transact\Recipient;
 
 class RecipientTest extends TestCase
 {
-
     public function testJsonSerialize()
     {
         $instance = new Recipient('me@example.com');

@@ -2,6 +2,7 @@
 
 namespace Targito\Api\Tests\DTO\Request;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Targito\Api\DTO\Request\AbstractRequestDTO;
 
@@ -21,6 +22,7 @@ class AbstractRequestDTOTest extends TestCase
     {
         $this->instance = new class extends AbstractRequestDTO {
             public $testProperty1;
+
             public $testProperty2;
         };
         $this->class = get_class($this->instance);
@@ -36,14 +38,14 @@ class AbstractRequestDTOTest extends TestCase
     {
         $instance = $this->class::fromArray([
             'testProperty1' => 'testValue1',
-            'testProperty2' => 'testValue2'
+            'testProperty2' => 'testValue2',
         ]);
         self::assertEquals('testValue1', $instance->testProperty1);
         self::assertEquals('testValue2', $instance->testProperty2);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $instance = $this->class::fromArray([
-            'nonExistentProperty' => 'test'
+            'nonExistentProperty' => 'test',
         ]);
     }
 }

@@ -1,0 +1,14 @@
+language: php
+
+matrix:
+  include:
+    - php: 7.2
+    - php: 7.3
+    - php: 7.4
+
+install: composer install
+
+script:
+  - composer fixer -- --dry-run
+  - composer phpstan
+  - vendor/bin/phpunit
