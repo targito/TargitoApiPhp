@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/targito/TargitoApiPhp.svg?branch=master)](https://travis-ci.com/targito/TargitoApiPhp)
 
+If you use Symfony 4 or 5, you can use our [Symfony bundle](https://github.com/targito/TargitoApiPhpBundle).
+
 ## Installation
 
 `composer require targito/targito-api`
