@@ -154,7 +154,7 @@ The module is accessed by calling `contacts()` on the api object or constructing
             - bool   `isOptedIn` - whether the contact is opted in
             - bool   `isOptedOut` - whether the contact is opted out
             - bool   `isNew` - whether the contact is newly created or it existed before
-            - `previousState` - if the contact existed previously, this property will be instance of
+            - object `previousState` - if the contact existed previously, this property will be instance of
             `\Targito\Api\DTO\Contact\AddContactHistory` otherwise null.
                 - `AddContactHistory` contains these properties: `bool isOptedIn` and `bool isOptedOut`
 - `editContact`
@@ -197,3 +197,44 @@ The module is accessed by calling `contacts()` on the api object or constructing
         - class: `\Targito\Api\DTO\Response\Contact\ExportContactByIdResponse`
         - properties:
             - string `jobId` - the ID of the job that will perform the export
+
+### Transact
+
+The module is accessed by calling `transact()` on the api object or constructing
+`\Targito\Api\Endpoint\TargitoTransactEndpoint` manually.
+
+### Methods
+
+- `sendEmail`
+    - request data: `\Targito\Api\DTO\Request\Transact\SendEmailRequest`
+    - properties:
+        - string   `origin` - the website origin
+        - string   `email` - the recipient email
+        - string   `mailingId` - the mailing ID from Targito
+        - string   `fromName` (optional) - the name of the sender
+        - string   `fromEmail` (optional) - the email address of the sender
+        - string   `replyTo` (optional) - the email address that will be used as Reply-To in the mailing
+        - DateTime `sendDateTime` (optional) - the date and time the mailing will be sent
+        - array    `columns` (optional) - a hash map of variableName => value pairs
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Transact\SendEmailResponse`
+        - properties:
+            - bool `success` - whether the operation succeeded
+- `sendMassEmail`
+    - request data: `\Targito\Api\DTO\Request\Transact\SendMassEmailRequest`
+    - properties:
+        - string   `origin` - the website origin
+        - array    `recipients` - can be either an array of arrays or array of instances of the
+        `\Targito\Api\DTO\Transact\Recipient` class
+            - Recipient properties:
+                - string `email` - the recipient's email address
+                - array  `columns` (optional) - a hash map of variableName => value pairs
+        - string   `mailingId` - the mailing ID from Targito
+        - string   `fromName` (optional) - the name of the sender
+        - string   `fromEmail` (optional) - the email address of the sender
+        - string   `replyTo` (optional) - the email address that will be used as Reply-To in the mailing
+        - DateTime `sendDateTime` (optional) - the date and time the mailing will be sent
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Transact\SendMassEmailResponse`
+        - properties:
+            - bool `success` - whether the operation succeeded

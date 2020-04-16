@@ -18,7 +18,7 @@ class Recipient implements JsonSerializable
      *
      * @var array<string,string>|null
      */
-    private $columns;
+    private $columns = null;
 
     public function __construct(string $email, ?array $columns = null)
     {
