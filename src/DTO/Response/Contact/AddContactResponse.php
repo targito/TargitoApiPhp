@@ -48,6 +48,8 @@ final class AddContactResponse extends AbstractResponseDTO
         if (isset($body['_history'])) {
             $this->isNew = false;
             $this->previousState = new AddContactHistory($body['_history']['isOptedIn'], $body['_history']['isOptedOut']);
+        } else {
+            $this->isNew = true;
         }
 
         $this->id = $body['id'];

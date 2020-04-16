@@ -4,17 +4,18 @@ namespace Targito\Api\Tests\Credentials;
 
 use PHPUnit\Framework\TestCase;
 use Targito\Api\Credentials\EnvironmentCredentials;
+use Targito\Api\Exception\TargitoException;
 
 class EnvironmentCredentialsTest extends TestCase
 {
-    public function testEnvironmentCredentials()
-    {
-        putenv('TARGITO_ACCOUNT_ID=test1');
-        putenv('TARGITO_API_PASSWORD=test2');
-        $instance = new EnvironmentCredentials();
+    /**
+     * @var EnvironmentCredentials
+     */
+    private $instance;
 
-        self::assertEquals('test1', $instance->getAccountId());
-        self::assertEquals('test2', $instance->getApiPassword());
+    protected function setUp(): void
+    {
+        $this->instance = new EnvironmentCredentials();
     }
 
     public function testCustomEnvironmentCredentials()
@@ -28,5 +29,26 @@ class EnvironmentCredentialsTest extends TestCase
 
         self::assertEquals('test1', $instance->getAccountId());
         self::assertEquals('test2', $instance->getApiPassword());
+    }
+
+    public function testMissingCredentialsAccountId()
+    {
+        $this->expectException(TargitoException::class);
+        $this->instance->getAccountId();
+    }
+
+    public function testMissingCredentialsApiPassword()
+    {
+        $this->expectException(TargitoException::class);
+        $this->instance->getApiPassword();
+    }
+
+    public function testEnvironmentCredentials()
+    {
+        putenv('TARGITO_ACCOUNT_ID=test1');
+        putenv('TARGITO_API_PASSWORD=test2');
+
+        self::assertEquals('test1', $this->instance->getAccountId());
+        self::assertEquals('test2', $this->instance->getApiPassword());
     }
 }
