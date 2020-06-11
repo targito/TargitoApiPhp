@@ -4,10 +4,9 @@ namespace Targito\Api\Tests\DTO\Transact;
 
 use GuzzleHttp\Psr7\Stream;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Targito\Api\DTO\Transact\Attachment;
-use PHPUnit\Framework\TestCase;
-use Targito\Api\Exception\TargitoException;
 
 class AttachmentTest extends TestCase
 {
