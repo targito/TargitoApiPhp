@@ -218,6 +218,18 @@ The module is accessed by calling `transact()` on the api object or constructing
         - string   `replyTo` (optional) - the email address that will be used as Reply-To in the mailing
         - DateTime `sendDateTime` (optional) - the date and time the mailing will be sent
         - array    `columns` (optional) - a hash map of variableName => value pairs
+        - array    `attachments` - (optional) either an array of arrays or array of instances of the
+        `\Targito\Api\DTO\Transact\Attachment` class
+            - Attachment class constructor parameters:
+                - string `name` - the name of the file
+                - string `mediaType` - the media type of the file (also known as MIME type)
+                - StreamInterface|stream|string - the content of the file either as a string (the raw content of the file),
+                or a php stream (e.g. file opened using `fopen()`), or an instance of StreamInterface (if your app uses
+                a PSR-7 implementation of streams)
+            - If you supply the attachment as an array, the structure is as follows:
+                - string `name` - the name of the file
+                - string `type` - the media type of the file
+                - string `data` - base64 encoded content of the file
     - return value:
         - class: `\Targito\Api\DTO\Response\Transact\SendEmailResponse`
         - properties:
