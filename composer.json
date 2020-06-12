@@ -10,7 +10,8 @@
         "ext-json": "*"
     },
     "suggest": {
-        "ext-curl": "Install curl for a better http implementation"
+        "ext-curl": "Install curl for a better http implementation",
+        "psr/http-message-implementation": "A StreamInterface implementation for using attachments in transact files"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +21,8 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.18",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "guzzlehttp/psr7": "^1.6"
     },
     "autoload-dev": {
         "psr-4": {
