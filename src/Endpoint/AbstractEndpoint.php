@@ -76,7 +76,7 @@ abstract class AbstractEndpoint
     {
         $missing = [];
         foreach ($required as $requiredParameter) {
-            if (!isset($data[$requiredParameter]) || !$data[$requiredParameter]) {
+            if (!isset($data[$requiredParameter])) {
                 $missing[] = $requiredParameter;
             }
         }
