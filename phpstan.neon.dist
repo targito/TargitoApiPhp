@@ -1,3 +1,6 @@
 parameters:
   checkMissingIterableValueType: false
   checkGenericClassInNonGenericObjectType: false
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    - '#expects CurlHandle, resource given#'
