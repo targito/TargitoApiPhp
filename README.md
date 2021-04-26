@@ -199,7 +199,19 @@ The module is accessed by calling `contacts()` on the api object or constructing
         - class: `\Targito\Api\DTO\Response\Contact\ExportContactByIdResponse`
         - properties:
             - string `jobId` - the ID of the job that will perform the export
-
+- `changeContactEmailAddress`
+    - request data: `\Targito\Api\DTO\Request\Contact\ChangeContactEmailAddressRequest`
+    - properties:
+        - string `origin` - the contact origin
+        - string `oldEmail` - the original email address
+        - string `newEmail` - the new email address
+        - bool `mergeIfExists` - if set to true, and the new email address already exists, all events from both the old 
+          contact and the new contact will be merged into one
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\ChangeContactEmailAddressResponse`
+        - properties:
+            - bool `success` - whether changing the email succeeded or not
+    
 ### Transact
 
 The module is accessed by calling `transact()` on the api object or constructing

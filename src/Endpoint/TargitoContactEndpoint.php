@@ -3,11 +3,13 @@
 namespace Targito\Api\Endpoint;
 
 use Targito\Api\DTO\Request\Contact\AddContactRequest;
+use Targito\Api\DTO\Request\Contact\ChangeContactEmailAddressRequest;
 use Targito\Api\DTO\Request\Contact\DeleteContactRequest;
 use Targito\Api\DTO\Request\Contact\EditContactRequest;
 use Targito\Api\DTO\Request\Contact\ExportContactByIdRequest;
 use Targito\Api\DTO\Request\Contact\OptOutContactRequest;
 use Targito\Api\DTO\Response\Contact\AddContactResponse;
+use Targito\Api\DTO\Response\Contact\ChangeContactEmailAddressResponse;
 use Targito\Api\DTO\Response\Contact\DeleteContactResponse;
 use Targito\Api\DTO\Response\Contact\EditContactResponse;
 use Targito\Api\DTO\Response\Contact\ExportContactByIdResponse;
@@ -141,6 +143,31 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         );
 
         return new ExportContactByIdResponse($response);
+    }
+
+    /**
+     * Changes contact's email address
+     *
+     * @param array|ChangeContactEmailAddressRequest $data
+     *
+     * @return ChangeContactEmailAddressResponse
+     */
+    public function changeContactEmailAddress($data): ChangeContactEmailAddressResponse
+    {
+        if ($exception = $this->getExceptionForInvalidRequestData($data, ChangeContactEmailAddressRequest::class)) {
+            throw $exception;
+        }
+        if ($exception = $this->getExceptionForMissingRequiredData($data, ['origin', 'oldEmail', 'newEmail', 'mergeIfExists'])) {
+            throw $exception;
+        }
+
+        $response = $this->httpRequest->post(
+            $this->getApiUrl(__FUNCTION__),
+            $data,
+            $this->credentials
+        );
+
+        return new ChangeContactEmailAddressResponse($response);
     }
 
     /**
