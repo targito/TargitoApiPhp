@@ -1,6 +1,6 @@
 # Targito API implementation for PHP 7.2+
 
-[![Build Status](https://travis-ci.com/targito/TargitoApiPhp.svg?branch=master)](https://travis-ci.com/targito/TargitoApiPhp)
+[![Build Status](https://github.com/targito/TargitoApiPhp/actions/workflows/test.yaml/badge.svg)](https://github.com/targito/TargitoApiPhp/actions/workflows/test.yaml)
 
 If you use Symfony 4 or 5, you can use our [Symfony bundle](https://github.com/targito/TargitoApiPhpBundle).
 
