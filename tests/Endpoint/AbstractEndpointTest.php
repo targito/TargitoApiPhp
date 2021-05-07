@@ -4,6 +4,7 @@ namespace Targito\Api\Tests\Endpoint;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 use Targito\Api\Credentials\EnvironmentCredentials;
 use Targito\Api\DTO\Request\AbstractRequestDTO;
 use Targito\Api\Endpoint\AbstractEndpoint;
@@ -116,6 +117,19 @@ class AbstractEndpointTest extends TestCase
         ]), $required));
     }
 
+    public function testDifferentApiHosts(): void
+    {
+        self::assertEquals('https://api.targito.com/v1.0/test/Test', $this->getApiUrl($this->instance));
+
+        $instance = new class(new EnvironmentCredentials(), new CurlHttpRequest(), 'https://custom.api.targito.com/v1.0') extends AbstractEndpoint {
+            protected function getApiModule(): string
+            {
+                return 'test';
+            }
+        };
+        self::assertEquals('https://custom.api.targito.com/v1.0/test/Test', $this->getApiUrl($instance));
+    }
+
     private function createDto(array $data): AbstractRequestDTO
     {
         $dto = new class extends AbstractRequestDTO {
@@ -124,5 +138,13 @@ class AbstractEndpointTest extends TestCase
         return $dto::fromArray([
             'additionalFields' => $data,
         ]);
+    }
+
+    private function getApiUrl(AbstractEndpoint $instance): string
+    {
+        $reflection = new ReflectionMethod($instance, 'getApiUrl');
+        $reflection->setAccessible(true);
+
+        return $reflection->invoke($instance, 'test');
     }
 }

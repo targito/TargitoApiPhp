@@ -20,10 +20,19 @@ abstract class AbstractEndpoint
      */
     protected $httpRequest;
 
-    public function __construct(CredentialsInterface $credentials, HttpRequestInterface $httpRequest)
-    {
+    /**
+     * @var string
+     */
+    protected $apiUrl;
+
+    public function __construct(
+        CredentialsInterface $credentials,
+        HttpRequestInterface $httpRequest,
+        string $apiUrl = TargitoApi::API_URL
+    ) {
         $this->credentials = $credentials;
         $this->httpRequest = $httpRequest;
+        $this->apiUrl = $apiUrl;
     }
 
     /**
@@ -63,7 +72,12 @@ abstract class AbstractEndpoint
 
     protected function getApiUrl(string $method): string
     {
-        return sprintf('%s/%s/%s', TargitoApi::API_URL, $this->getApiModule(), ucfirst($method));
+        return sprintf(
+            '%s/%s/%s',
+            $this->apiUrl,
+            $this->getApiModule(),
+            ucfirst($method)
+        );
     }
 
     /**

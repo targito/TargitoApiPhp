@@ -24,13 +24,22 @@ final class TargitoApi
     private $httpRequest;
 
     /**
+     * @var string
+     */
+    private $apiUrl;
+
+    /**
      * Constructs the api object, if no httpRequest implementation is provided, default one is used
      *
      * @param CredentialsInterface      $credentials
      * @param HttpRequestInterface|null $httpRequest
+     * @param string                    $apiUrl
      */
-    public function __construct(CredentialsInterface $credentials, ?HttpRequestInterface $httpRequest = null)
-    {
+    public function __construct(
+        CredentialsInterface $credentials,
+        ?HttpRequestInterface $httpRequest = null,
+        string $apiUrl = self::API_URL
+    ) {
         if ($httpRequest === null) {
             if (extension_loaded('curl')) {
                 $httpRequest = new CurlHttpRequest();
@@ -40,15 +49,16 @@ final class TargitoApi
         }
         $this->credentials = $credentials;
         $this->httpRequest = $httpRequest;
+        $this->apiUrl = $apiUrl;
     }
 
     public function contacts(): TargitoContactEndpoint
     {
-        return new TargitoContactEndpoint($this->credentials, $this->httpRequest);
+        return new TargitoContactEndpoint($this->credentials, $this->httpRequest, $this->apiUrl);
     }
 
     public function transact(): TargitoTransactEndpoint
     {
-        return new TargitoTransactEndpoint($this->credentials, $this->httpRequest);
+        return new TargitoTransactEndpoint($this->credentials, $this->httpRequest, $this->apiUrl);
     }
 }
