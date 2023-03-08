@@ -21,6 +21,8 @@ jobs:
           php-version: ${{ matrix.version }}
       - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Remove version constraint
+        run: cat composer.json | jq 'del(.config)' > composer2.json && rm -f composer.json && mv composer2.json composer.json
       - name: Install Dependencies
         run: composer install
       - name: Test code style
@@ -38,6 +40,8 @@ jobs:
           php-version: ${{ matrix.version }}
       - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Remove version constraint
+        run: cat composer.json | jq 'del(.config)' > composer2.json && rm -f composer.json && mv composer2.json composer.json
       - name: Install Dependencies
         run: composer install
       - name: Run static analysis
@@ -55,6 +59,8 @@ jobs:
           php-version: ${{ matrix.version }}
       - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Remove version constraint
+        run: cat composer.json | jq 'del(.config)' > composer2.json && rm -f composer.json && mv composer2.json composer.json
       - name: Install Dependencies
         run: composer install
       - name: Run tests
