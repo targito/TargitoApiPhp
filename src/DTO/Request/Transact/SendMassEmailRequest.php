@@ -58,7 +58,7 @@ class SendMassEmailRequest extends AbstractRequestDTO
      */
     public $sendDateTime = null;
 
-    public function jsonSerialize(array $normalizers = [])
+    public function jsonSerialize(array $normalizers = []): array
     {
         $result = parent::jsonSerialize([
             'sendDateTime' => function (?DateTime $dateTime) {

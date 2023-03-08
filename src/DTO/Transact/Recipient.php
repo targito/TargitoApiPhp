@@ -26,10 +26,7 @@ class Recipient implements JsonSerializable
         $this->columns = $columns;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $result = [
             'email' => $this->email,

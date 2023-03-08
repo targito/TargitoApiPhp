@@ -48,7 +48,7 @@ final class AddContactRequest extends AbstractRequestDTO
      */
     public $columns = null;
 
-    public function jsonSerialize(array $normalizers = [])
+    public function jsonSerialize(array $normalizers = []): array
     {
         $json = parent::jsonSerialize();
 

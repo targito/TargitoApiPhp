@@ -39,10 +39,8 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return property_exists($this, $offset) || isset($this->additionalFields[$offset]);
     }
@@ -52,6 +50,7 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (isset($this->additionalFields[$offset])) {
@@ -64,10 +63,8 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
     /**
      * @param string $offset
      * @param mixed  $value
-     *
-     * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (property_exists($this, $offset)) {
             $this->{$offset} = $value;
@@ -78,10 +75,8 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
 
     /**
      * @param string $offset
-     *
-     * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (property_exists($this, $offset)) {
             $this->{$offset} = null;
@@ -91,13 +86,11 @@ abstract class AbstractRequestDTO implements JsonSerializable, ArrayAccess
     }
 
     /**
-     * @inheritDoc
-     *
      * @param array<string,callable> $normalizers
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function jsonSerialize(array $normalizers = [])
+    public function jsonSerialize(array $normalizers = []): array
     {
         $result = [];
         foreach (get_object_vars($this) as $property => $value) {

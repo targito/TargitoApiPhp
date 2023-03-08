@@ -70,7 +70,7 @@ class SendEmailRequest extends AbstractRequestDTO
      */
     public $attachments = [];
 
-    public function jsonSerialize(array $normalizers = [])
+    public function jsonSerialize(array $normalizers = []): array
     {
         $result = parent::jsonSerialize([
             'sendDateTime' => function (?DateTime $dateTime) {
@@ -82,6 +82,7 @@ class SendEmailRequest extends AbstractRequestDTO
             },
         ]);
 
+        assert(is_array($result['attachments']));
         foreach ($result['attachments'] as $key => $attachment) {
             if ($attachment instanceof Attachment) {
                 $result['attachments'][$key] = $attachment->jsonSerialize();
