@@ -42,6 +42,13 @@ final class AddContactRequest extends AbstractRequestDTO
     public $consents = null;
 
     /**
+     * The campaign ID
+     *
+     * @var string|null
+     */
+    public $campaignId = null;
+
+    /**
      * Any additional fields (must be first defined in Targito) where the array key is the column
      *
      * @var array<string,string>|null
@@ -61,6 +68,9 @@ final class AddContactRequest extends AbstractRequestDTO
 
         if ($this->columns === null) {
             unset($json['columns']);
+        }
+        if ($this->campaignId === null) {
+            unset($json['campaignId']);
         }
 
         return $json;
