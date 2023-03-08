@@ -64,11 +64,10 @@ final class CurlHttpRequest implements HttpRequestInterface
         }
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $body = @json_decode($rawBody, true);
-        if ($statusCode >= 300 || isset($body['error'])) {
-            if (isset($body['error']['message'])) {
+        if ($statusCode >= 300 || (is_array($body) && isset($body['error']))) {
+            $errorMessage = "The request resulted in error (status code ${statusCode})";
+            if (is_array($body) && isset($body['error']['message'])) {
                 $errorMessage = 'API error: ' . $body['error']['message'] . " (status code ${statusCode})";
-            } else {
-                $errorMessage = "The request resulted in error (status code ${statusCode})";
             }
             throw new HttpException($errorMessage);
         }

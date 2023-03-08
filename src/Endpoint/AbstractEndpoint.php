@@ -59,7 +59,7 @@ abstract class AbstractEndpoint
         $expectedTypes = ['array'];
 
         if ($expectedClass !== null) {
-            if (is_a($requestData, $expectedClass)) {
+            if (is_object($requestData) && is_a($requestData, $expectedClass)) {
                 return null;
             }
             $expectedTypes[] = $expectedClass;
