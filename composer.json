@@ -22,7 +22,8 @@
         "friendsofphp/php-cs-fixer": "^2.18",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^8.5",
-        "guzzlehttp/psr7": "^1.8"
+        "guzzlehttp/psr7": "^1.8",
+        "roave/backward-compatibility-check": "^3.0"
     },
     "autoload-dev": {
         "psr-4": {
