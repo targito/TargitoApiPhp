@@ -66,7 +66,7 @@ final class StreamHttpRequest implements HttpRequestInterface
             throw new HttpException('There was an error getting the required resource');
         }
         $body = @json_decode($rawBody, true);
-        if (isset($body['error']['message'])) {
+        if (is_array($body) && isset($body['error']['message'])) {
             throw new HttpException('API error: ' . $body['error']['message']);
         }
 

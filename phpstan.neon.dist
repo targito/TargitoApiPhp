@@ -2,5 +2,6 @@ parameters:
   checkMissingIterableValueType: false
   checkGenericClassInNonGenericObjectType: false
   reportUnmatchedIgnoredErrors: false
+  treatPhpDocTypesAsCertain: false
   ignoreErrors:
     - '#expects CurlHandle, resource given#'

@@ -42,6 +42,7 @@ final class HttpResponse implements HttpResponseInterface
         if (json_last_error()) {
             throw new RuntimeException('JSON decode error: ' . json_last_error_msg());
         }
+        assert(is_array($data));
 
         return $data;
     }
