@@ -146,6 +146,7 @@ The module is accessed by calling `contacts()` on the api object or constructing
         - bool   `isOptedIn` - whether the contact is opted in
         - bool   `forbidReOptIn` (optional) - whether to forbid opting in again if the contact is already in database and
         is opted out
+        - bool   `forceDoubleReOptIn` (optional) - whether to force opting in if the contact is already in the database
         - array  `consents` (optional) - string array containing list of consents the contact has given
         - array  `columns` (optional) - any additional columns (which must be defined in Targito), where the array key
         is the column name

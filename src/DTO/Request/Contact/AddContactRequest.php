@@ -35,6 +35,13 @@ final class AddContactRequest extends AbstractRequestDTO
     public $forbidReOptIn = null;
 
     /**
+     * Whether to force double opt-in if the contact is already in the database
+     *
+     * @var bool|null
+     */
+    public $forceDoubleReOptIn = null;
+
+    /**
      * List of all consents for the contact
      *
      * @var string[]|null
@@ -61,6 +68,9 @@ final class AddContactRequest extends AbstractRequestDTO
 
         if ($this->forbidReOptIn === null) {
             unset($json['forbidReOptIn']);
+        }
+        if ($this->forceDoubleReOptIn === null) {
+            unset($json['forceDoubleReOptIn']);
         }
         if ($this->consents === null) {
             unset($json['consents']);
