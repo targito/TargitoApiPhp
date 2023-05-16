@@ -47,6 +47,14 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         return new AddContactResponse($response);
     }
 
+    /**
+     * Creates a new contact with check for presence in a dynamic contact list - meaning it checks whether the new
+     * contact matches conditions of an existing contact list.
+     *
+     * @param array|AddContactWithCheckRequest $data
+     *
+     * @return AddContactWithCheckResponse
+     */
     public function addContactWithCheck($data): AddContactWithCheckResponse
     {
         if ($exception = $this->getExceptionForInvalidRequestData($data, AddContactWithCheckRequest::class)) {
