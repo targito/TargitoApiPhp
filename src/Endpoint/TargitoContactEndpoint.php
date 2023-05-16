@@ -3,12 +3,14 @@
 namespace Targito\Api\Endpoint;
 
 use Targito\Api\DTO\Request\Contact\AddContactRequest;
+use Targito\Api\DTO\Request\Contact\AddContactWithCheckRequest;
 use Targito\Api\DTO\Request\Contact\ChangeContactEmailAddressRequest;
 use Targito\Api\DTO\Request\Contact\DeleteContactRequest;
 use Targito\Api\DTO\Request\Contact\EditContactRequest;
 use Targito\Api\DTO\Request\Contact\ExportContactByIdRequest;
 use Targito\Api\DTO\Request\Contact\OptOutContactRequest;
 use Targito\Api\DTO\Response\Contact\AddContactResponse;
+use Targito\Api\DTO\Response\Contact\AddContactWithCheckResponse;
 use Targito\Api\DTO\Response\Contact\ChangeContactEmailAddressResponse;
 use Targito\Api\DTO\Response\Contact\DeleteContactResponse;
 use Targito\Api\DTO\Response\Contact\EditContactResponse;
@@ -43,6 +45,38 @@ final class TargitoContactEndpoint extends AbstractEndpoint
         );
 
         return new AddContactResponse($response);
+    }
+
+    /**
+     * Creates a new contact with check for presence in a dynamic contact list - meaning it checks whether the new
+     * contact matches conditions of an existing contact list.
+     *
+     * @param array|AddContactWithCheckRequest $data
+     *
+     * @return AddContactWithCheckResponse
+     */
+    public function addContactWithCheck($data): AddContactWithCheckResponse
+    {
+        if ($exception = $this->getExceptionForInvalidRequestData($data, AddContactWithCheckRequest::class)) {
+            throw $exception;
+        }
+        if ($exception = $this->getExceptionForMissingRequiredData($data, [
+            'email',
+            'origin',
+            'isOptedIn',
+            'contactListId',
+            'isInContactListMailingId',
+        ])) {
+            throw $exception;
+        }
+
+        $response = $this->httpRequest->post(
+            $this->getApiUrl(__FUNCTION__),
+            $data,
+            $this->credentials
+        );
+
+        return new AddContactWithCheckResponse($response);
     }
 
     /**

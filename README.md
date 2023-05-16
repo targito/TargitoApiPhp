@@ -160,6 +160,18 @@ The module is accessed by calling `contacts()` on the api object or constructing
             - object `previousState` - if the contact existed previously, this property will be instance of
             `\Targito\Api\DTO\Contact\AddContactHistory` otherwise null.
                 - `AddContactHistory` contains these properties: `bool isOptedIn` and `bool isOptedOut`
+- `addContactWithCheck`
+    - request data: `\Targito\Api\DTO\Request\Contact\AddContactWithCheckRequest`
+    - properties:
+        - same properties as for `addContact`
+        - string `contactListId` - UUID of a contact list to check whether the contact is already present in
+        - string `isInContactListMailingId` - UUID of a transact message to send to a contact that is already present in
+          the contact list in `contactListId`
+    - return value:
+        - class: `\Targito\Api\DTO\Response\Contact\AddContactWithCheckResponse`
+        - properties:
+            - same properties as for `addContact`
+            - bool `isInContactList` - whether the contact was in the contact list specified in request or not
 - `editContact`
     - request data: `\Targito\Api\DTO\Request\Contact\EditContactRequest`
     - properties:
